@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Select } from "./Select/Select";
 import { Fieldset } from "../Fieldset/Fieldset";
 import style from "./Form.module.scss";
+import { title } from "process";
 
 type SelectOption = {
     value: string;
@@ -58,6 +59,10 @@ export default function Form() {
         return acc;
     }, []);
 
+    function handleSelect(title, value) {
+        console.log(`titulo: ${title} | valor: ${value}`);
+    }
+
     console.log(data);
 
     return (
@@ -69,13 +74,7 @@ export default function Form() {
                             <Select
                                 key={j}
                                 data={field}
-                                onChange={(value) => {
-                                    console.log(
-                                        `Selected value from ${field.title}:`,
-                                        value
-                                    );
-                                    // Aqui você pode salvar no estado do pai se quiser
-                                }}
+                                onChange={(value) => handleSelect(field.title, value)}
                             />
                         ) : null
                     )}
