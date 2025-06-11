@@ -5,8 +5,22 @@ import { Select } from "./Select/Select";
 import { Fieldset } from "../Fieldset/Fieldset";
 import style from "./Form.module.scss";
 
+type SelectOption = {
+    value: string;
+    label: string;
+};
+
+type SelectField = {
+    title: string;
+    values: SelectOption[];
+};
+
+type DataType = {
+    [key: string]: SelectField;
+};
+
 export default function Form() {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<DataType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -14,13 +28,10 @@ export default function Form() {
         const fetchData = async () => {
             try {
                 const response = await fetch("/api/dates");
-
-                if (!response.ok) {
-                    throw new Error("Erro ao buscar dados");
-                }
+                if (!response.ok) throw new Error("Erro ao buscar dados");
 
                 const result = await response.json();
-                setData(result);
+                setData(result.data); // já salva só `data`
             } catch (err) {
                 setError(
                     err instanceof Error ? err.message : "Erro desconhecido"
@@ -35,38 +46,41 @@ export default function Form() {
 
     if (loading) return <div>Carregando...</div>;
     if (error) return <div>Erro: {error}</div>;
+    if (!data) return <div>Sem dados</div>;
 
-    console.log(data.data);
+    const keys = Object.keys(data);
+
+    // Divide os selects em blocos de 4
+    const fieldsets = keys.reduce<SelectField[][]>((acc, key, index) => {
+        const groupIndex = Math.floor(index / 4);
+        if (!acc[groupIndex]) acc[groupIndex] = [];
+        acc[groupIndex].push(data[key]);
+        return acc;
+    }, []);
+
+    console.log(data);
 
     return (
         <form className={`${style.form} form flex flex-col gap-6`}>
-            <Fieldset>
-                <Select data={data.data.locales} />
-                <Select data={data.data.dateStyle} />
-                <Select data={data.data.timeStyles} />
-                <Select data={data.data.localeMatchers} />
-            </Fieldset>
-
-            <Fieldset>
-                <Select data={data.data.hour12} />
-                <Select data={data.data.hourCycle} />
-                <Select data={data.data.formatMatcher} />
-                <Select data={data.data.weekday} />
-            </Fieldset>
-
-            <Fieldset>
-                <Select data={data.data.year} />
-                <Select data={data.data.month} />
-                <Select data={data.data.day} />
-                <Select data={data.data.hour} />
-            </Fieldset>
-
-            <Fieldset>
-                <Select data={data.data.minute} />
-                <Select data={data.data.second} />
-                <Select data={data.data.timeZoneName} />
-                <Select data={data.data.timeZones} />
-            </Fieldset>
+            {fieldsets.map((group, i) => (
+                <Fieldset key={i}>
+                    {group.map((field, j) =>
+                        field && field.values ? (
+                            <Select
+                                key={j}
+                                data={field}
+                                onChange={(value) => {
+                                    console.log(
+                                        `Selected value from ${field.title}:`,
+                                        value
+                                    );
+                                    // Aqui você pode salvar no estado do pai se quiser
+                                }}
+                            />
+                        ) : null
+                    )}
+                </Fieldset>
+            ))}
         </form>
     );
 }
