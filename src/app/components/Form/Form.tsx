@@ -58,10 +58,6 @@ export default function Form({ onSelectChange }: { onSelectChange: (field: strin
         return acc;
     }, []);
 
-    // function handleSelect(title, value) {
-    //     console.log(`titulo: ${title} | valor: ${value}`);
-    // }
-
     console.log(data);
 
     return (

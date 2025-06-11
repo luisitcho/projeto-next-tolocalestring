@@ -1,3 +1,4 @@
+import { useFormContext } from "../../../context/FormContext";
 import { useState } from "react";
 
 type SelectProps = {
@@ -8,17 +9,14 @@ type SelectProps = {
     onChange?: (value: string) => void; // callback para avisar o pai
 };
 
-export function Select({ data, onChange }: SelectProps) {
-    const [selectedValue, setSelectedValue] = useState<string>(
-        data.values[0]?.value || ""
-    );
+export function Select({ data }: SelectProps) {
+    const { updateField } = useFormContext();
+    const [selectedValue] = useState<string>(data.values[0]?.value || "");
     const { title, values } = data;
 
-    function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-        const value = e.target.value;
-        setSelectedValue(value);
-        if (onChange) onChange(value);
-    }
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        updateField(title.toLowerCase(), e.target.value);
+    };
 
     return (
         <label htmlFor={title.toLowerCase()}>
