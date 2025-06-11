@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+*,
+*::before,
+*::after {
+    outline: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    * {
+        font-family: "Montserrat", sans-serif;
+    }
+
+    & {
+        scroll-behavior: smooth;
+        scroll-snap-type: y mandatory;
+    }
+
+    &.light {
+        .socials {
+            filter: invert(1);
+        }
+    }
+
+    > main {
+        overflow: hidden;
+    }
+}
+
+body {
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+
+
+    footer {
+        margin-top: auto;
+    }
+}
+
+// .min-h-custom {
+//     min-height: calc(100vh - 100px);
+// }
+
+.min-h-custom,
+#smooth-wrapper {
+    min-height: calc(100vh - 100px);
+}
+
+button,
+a {
+    cursor: pointer;
+
+    &:disabled,
+    &.disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+}
+p {
+    margin-bottom: 0.8rem;
+}
+
+/* Estilos para a classe light */
+html.light {
+    --thumb-bg: rgba(10, 10, 10, 0.5); /* Preto discreto no modo claro */
+    --thumb-bg-hover: rgba(10, 10, 10, 0.8); /* Preto visível no hover */
+}
+
+/* Estilos para a classe dark */
+html.dark {
+    --thumb-bg: rgba(250, 250, 250, 0.5); /* Branco discreto no modo escuro */
+    --thumb-bg-hover: rgba(250, 250, 250, 0.8); /* Branco visível no hover */
+}
+
+/* Define a largura da barra de rolagem */
+*::-webkit-scrollbar {
+    width: 2px;
+    height: 3px;
+}
+
+/* Estiliza a parte da barra que o usuário arrasta */
+*::-webkit-scrollbar-thumb {
+    background: var(--thumb-bg); /* Usa a variável dependendo do tema */
+    border-radius: 3px;
+    transition:
+        background 0.3s ease-in-out,
+        opacity 0.3s ease-in-out;
+    opacity: 0.2;
+}
+
+/* Mantém o fundo da barra de rolagem transparente */
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Quando o usuário passa o mouse sobre a barra de rolagem */
+*::-webkit-scrollbar-thumb:hover {
+    background: var(--thumb-bg-hover); /* Usa a variável dependendo do tema */
+    opacity: 1;
+}
+
+*,
+*::before,
+*::after {
+    outline: 0;
+    box-sizing: border-box;
+}
