@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { Select } from "./Select/Select";
 import { Fieldset } from "../Fieldset/Fieldset";
 import style from "./Form.module.scss";
-import { title } from "process";
 
 type SelectOption = {
     value: string;
@@ -20,7 +19,7 @@ type DataType = {
     [key: string]: SelectField;
 };
 
-export default function Form() {
+export default function Form({ onSelectChange }: { onSelectChange: (field: string, value: string) => void }) {
     const [data, setData] = useState<DataType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -59,9 +58,9 @@ export default function Form() {
         return acc;
     }, []);
 
-    function handleSelect(title, value) {
-        console.log(`titulo: ${title} | valor: ${value}`);
-    }
+    // function handleSelect(title, value) {
+    //     console.log(`titulo: ${title} | valor: ${value}`);
+    // }
 
     console.log(data);
 
@@ -74,7 +73,7 @@ export default function Form() {
                             <Select
                                 key={j}
                                 data={field}
-                                onChange={(value) => handleSelect(field.title, value)}
+                                onChange={(value) => onSelectChange(field.title, value)}
                             />
                         ) : null
                     )}
