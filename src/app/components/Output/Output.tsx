@@ -75,14 +75,14 @@ export default function Output() {
 
             {/* Resultado e código */}
             <div className="mt-6 p-4 rounded border border-gray-300 bg-white text-sm">
-                <p>
+                <p className="flex gap-2">
                     <strong className="text-black">Result:</strong>{" "}
                     <span className="js-output text-black">
                         {formattedDate}
                     </span>
                 </p>
-                <p className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <strong className="text-black min-w-[60px]">Code:</strong>
+                <p className="mt-2 flex flex-col gap-1 sm:flex-row sm:items-center">
+                    <strong className="text-black min-w-[53px]">Code:</strong>
                     <code className="bg-gray-100 px-2 py-1 text-[#e83e8c] whitespace-pre-wrap break-all w-full sm:w-auto max-w-full overflow-x-auto">
                         {codeString}
                     </code>
