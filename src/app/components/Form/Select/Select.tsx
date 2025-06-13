@@ -1,21 +1,23 @@
 import { useFormContext } from "../../../context/FormContext";
-import { useState } from "react";
 
 type SelectProps = {
     data: {
         title: string;
         values: { value: string; label: string }[];
     };
-    onChange?: (value: string) => void; // callback para avisar o pai
+    onChange?: (value: string) => void; // opcional, se quiser notificar manualmente
 };
 
-export function Select({ data }: SelectProps) {
-    const { updateField } = useFormContext();
-    const [selectedValue] = useState<string>(data.values[0]?.value || "");
-    const { title, values } = data;
+export function Select({ data, onChange }: SelectProps) {
+    const { values, updateField } = useFormContext();
+    const { title, values: options } = data;
+
+    const selectedValue = values[title.toLowerCase()] || options[0]?.value || "";
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        updateField(title.toLowerCase(), e.target.value);
+        const newValue = e.target.value;
+        updateField(title.toLowerCase(), newValue);
+        if (onChange) onChange(newValue);
     };
 
     return (
@@ -28,12 +30,8 @@ export function Select({ data }: SelectProps) {
                 value={selectedValue}
                 onChange={handleChange}
             >
-                {values.map((item, index) => (
-                    <option
-                        key={index}
-                        value={item.value}
-                        className="bg-[#0a0a0a]"
-                    >
+                {options.map((item, index) => (
+                    <option key={index} value={item.value} className="bg-[#0a0a0a]">
                         {item.label}
                     </option>
                 ))}

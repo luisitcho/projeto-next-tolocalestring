@@ -1,6 +1,11 @@
-// FormContext.tsx
 "use client";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
+    useCallback,
+} from "react";
 
 type FormValues = {
     [key: string]: string;
@@ -13,15 +18,23 @@ type FormContextType = {
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
-export const FormProvider = ({ children }: { children: ReactNode }) => {
-    const [values, setValues] = useState<FormValues>({});
+type FormProviderProps = {
+    children: ReactNode;
+    initialValues?: FormValues;
+};
 
-    const updateField = (name: string, value: string) => {
-        setValues(() => ({
-            title: name,
-            value_selected: value
-        }));
-    };
+export const FormProvider = ({
+    children,
+    initialValues = {},
+}: FormProviderProps) => {
+    const [values, setValues] = useState<FormValues>(initialValues);
+
+    const updateField = useCallback((name: string, value: string) => {
+        setValues((prev) => {
+            if (prev[name] === value) return prev;
+            return { ...prev, [name]: value };
+        });
+    }, []);
 
     return (
         <FormContext.Provider value={{ values, updateField }}>
@@ -32,7 +45,8 @@ export const FormProvider = ({ children }: { children: ReactNode }) => {
 
 export const useFormContext = () => {
     const context = useContext(FormContext);
-    if (!context)
+    if (!context) {
         throw new Error("useFormContext must be used inside FormProvider");
+    }
     return context;
 };

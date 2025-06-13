@@ -83,7 +83,7 @@ export async function GET() {
         ]
     };
 
-    const localeMatchers = {
+    const localeMatcher = {
         title: "localeMatcher",
         values: [
             { value: "", label: "-" },
@@ -197,7 +197,7 @@ export async function GET() {
         ]
     };
 
-    const timeZones = {
+    const timeZone = {
         title: "timeZone",
         values: [
             { value: "UTC", label: "Coordinated Universal Time (UTC)" },
@@ -227,7 +227,7 @@ export async function GET() {
             locales,
             dateStyles,
             timeStyles,
-            localeMatchers,
+            localeMatcher,
             hour12,
             hourCycle,
             formatMatcher,
@@ -239,7 +239,7 @@ export async function GET() {
             minute,
             second,
             timeZoneName,
-            timeZones
+            timeZone
             // stats,
         },
         metadata: {

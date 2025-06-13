@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Select } from "./Select/Select";
-import { Fieldset } from "../Fieldset/Fieldset";
+import { Fieldset } from "./Fieldset/Fieldset";
 import style from "./Form.module.scss";
 
 type SelectOption = {
