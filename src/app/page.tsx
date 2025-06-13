@@ -8,11 +8,11 @@ import Footer from "./components/Footer/Footer";
 import { FormProvider, useFormContext } from "./context/FormContext";
 
 // Valores iniciais estáticos (sem datas dinâmicas)
-const staticInitialValues = {
-    locale: 'pt-BR',
-    timeZone: 'America/Sao_Paulo',
-    // Outros valores padrão
-};
+// const staticInitialValues = {
+//     locale: 'pt-BR',
+//     timeZone: 'America/Sao_Paulo',
+//     // Outros valores padrão
+// };
 
 function PageContent() {
     const { values, updateField } = useFormContext();
@@ -41,7 +41,8 @@ export default function Home() {
         <>
             <div className="container">
                 <div className="content py-5">
-                    <FormProvider initialValues={staticInitialValues}>
+                    {/* <FormProvider initialValues={staticInitialValues}> */}
+                    <FormProvider>
                         <PageContent />
                     </FormProvider>
                 </div>
