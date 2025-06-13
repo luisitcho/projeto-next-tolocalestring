@@ -17,6 +17,7 @@ const staticInitialValues = {
 function PageContent() {
     const { values, updateField } = useFormContext();
 
+    console.log(values)
     // Atualiza valores dinâmicos apenas no cliente
     useEffect(() => {
         updateField('date', new Date().toISOString());
